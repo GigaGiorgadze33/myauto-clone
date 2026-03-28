@@ -28,9 +28,9 @@ const Breadcrumbs = () => {
 		<nav>
 			<ul className='flex text-secondary items-center gap-x-1'>
 				<Breadcrumb>მთავარი</Breadcrumb>
-				<ArrowLeft />
+				<ArrowLeft className='w-2.5' />
 				<Breadcrumb>ძიება</Breadcrumb>
-				<ArrowLeft />
+				<ArrowLeft className='w-2.5' />
 				<Breadcrumb active>იყიდება</Breadcrumb>
 			</ul>
 		</nav>

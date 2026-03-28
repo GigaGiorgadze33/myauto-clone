@@ -57,29 +57,104 @@
 	font-style: normal;
 }
 
+@font-face {
+	font-family: 'tbc';
+	src: url('/fonts/tbc-300.ttf') format('truetype');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'tbc';
+	src: url('/fonts/tbc-400.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'tbc';
+	src: url('/fonts/tbc-500.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'tbc';
+	src: url('/fonts/tbc-700.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'tbc';
+	src: url('/fonts/tbc-900.ttf') format('truetype');
+	font-weight: 900;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'helvetica';
+	src: url('/fonts/helvetica-400.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
 :root {
 	--color-secondary: #6f7383;
+	--color-seconday-100: #C2C9D8;
 	--color-primary: #fd4100;
+	--color-divider: #e2e5eb;
+	--color-divider-100: #E9E9F0;
+	--color-divider-2: #D8DBE2;
+	--color-black-800: #272A37;
+	--color-neutral: #8C929B;
+	--text-s: 13px;
+	--font-tbc: 'tbc', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--font-helvetica: 'helvetica', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--font-helvetica-geo: 'helvetica-neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
+
 
 @theme {
 	--color-secondary: var(--color-secondary);
 	--color-primary: var(--color-primary);
+	--color-divider: var(--color-divider);
+	--color-divider-100: var(--color-divider-100);
+	--color-neutral: var(--color-neutral);
+	--color-secondary-100: var(--color-seconday-100);
+	--color-black-800: var(--color-black-800);
+	--color-divider-2: var(--color-divider-2);
+	--text-s: var(--text-s);
+
+	--drop-shadow-filter: box-shadow: 0px 4px 16px 0px #A4AEC11A;
+	--drop-shadow-filter-search: box-shadow: 0px 2px 16px 0px #272A3721;
+
+	--font-tbc: var(--font-tbc);
+	--font-helvetica-geo: var(--font-helvetica-geo);
+	--font-helvetica: var(--font-helvetica);
 }
 
 @layer base {
+    input[type='number']::-webkit-outer-spin-button,
+    input[type='number']::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type='number'] {
+        -moz-appearance: textfield;
+    }
+
 	.main-container {
 		max-width: 1050px;
 	}
 
 	body {
-		font-family: 'helvetica-neue', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-			Roboto, sans-serif;
+		font-family: var(--font-helvetica-geo);
 		background-color: #f2f3f6;
 	}
 
-	* {
-		font-family: 'helvetica-neue', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-			Roboto, sans-serif;
+	button {
+		cursor: pointer;
 	}
 }
