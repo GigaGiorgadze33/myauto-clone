@@ -1,1 +1,85 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@font-face {
+	font-family: 'helvetica-neue';
+	src: url('/fonts/helvetica-neue-lt-geo-200-ultra-light.ttf')
+		format('truetype');
+	font-weight: 200;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'helvetica-neue';
+	src: url('/fonts/helvetica-neue-lt-geo-300-thin.ttf') format('truetype');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'helvetica-neue';
+	src: url('/fonts/helvetica-neue-lt-geo-400-light.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'helvetica-neue';
+	src: url('/fonts/helvetica-neue-lt-geo-500-medium.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'helvetica-neue';
+	src: url('/fonts/helvetica-neue-lt-geo-600-roman.ttf') format('truetype');
+	font-weight: 600;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'helvetica-neue';
+	src: url('/fonts/helvetica-neue-lt-geo-700-bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'helvetica-neue';
+	src: url('/fonts/helvetica-neue-lt-geo-800-heavy.ttf') format('truetype');
+	font-weight: 800;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'helvetica-neue';
+	src: url('/fonts/helvetica-neue-lt-geo-900-black.ttf') format('truetype');
+	font-weight: 900;
+	font-style: normal;
+}
+
+:root {
+	--color-secondary: #6f7383;
+	--color-primary: #fd4100;
+}
+
+@theme {
+	--color-secondary: var(--color-secondary);
+	--color-primary: var(--color-primary);
+}
+
+@layer base {
+	.main-container {
+		max-width: 1050px;
+	}
+
+	body {
+		font-family: 'helvetica-neue', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+			Roboto, sans-serif;
+		background-color: #f2f3f6;
+	}
+
+	* {
+		font-family: 'helvetica-neue', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+			Roboto, sans-serif;
+	}
+}
