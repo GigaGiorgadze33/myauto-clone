@@ -9,7 +9,7 @@ const ProductsSection = () => {
 	const { setValue } = useFormContext<FilterForm>();
 	const { products, fetchProducts } = useApiData();
 	return (
-		<section className='flex w-full flex-col gap-y-4'>
+		<section className='flex w-full flex-col max-lg:bg-white gap-y-2 lg:gap-y-4'>
 			<div className='lg:flex hidden w-full items-center justify-between'>
 				<h2 className='text-black-800 text-base'>
 					{products?.data.meta.total ?? 0} განცხადება

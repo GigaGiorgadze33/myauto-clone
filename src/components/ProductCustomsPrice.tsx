@@ -3,6 +3,7 @@ import Checkmark from '@/icons/Checkmark';
 import type { ProductItem } from '@/types/data';
 import type { FilterForm } from '@/types/filter';
 import { getCustomsPrice } from '@/utils';
+import classNames from 'classnames';
 import type React from 'react';
 import { useWatch } from 'react-hook-form';
 
@@ -19,15 +20,23 @@ const ProductCustomsPrice: React.FC<{
 	const LocationIcon =
 		LOCATIONS[product.parent_loc_id as keyof typeof LOCATIONS]?.icon;
 	return (
-		<>
+		<div
+			className={classNames(
+				'lg:font-tbc max-lg:rounded-md max-lg:py-1 max-lg:pl-1 max-lg:pr-2 text-[10px] lg:text-[11px]',
+				{
+					'max-lg:bg-success-50': product.customs_passed,
+					'max-lg:bg-error-100': !product.customs_passed,
+				}
+			)}
+		>
 			{' '}
 			{product.customs_passed ? (
-				<span className='text-success text-[11px] font-tbc flex items-center justify-center'>
+				<span className='text-success   flex items-center justify-center'>
 					<Checkmark />
-					<span className='ml-0.5 font-medium'>განბაჟებულია</span>
+					<span className='ml-0.5 lg:font-medium'>განბაჟებულია</span>
 				</span>
 			) : (
-				<span className='text-error font-tbc text-[11px] whitespace-nowrap space-x-1'>
+				<span className='text-error  whitespace-nowrap space-x-1'>
 					<span>განბაჟება</span>
 					<span className='font-medium font-helvetica-geo'>
 						{currencyDetails?.value === CURRENCIES[0].value
@@ -37,10 +46,10 @@ const ProductCustomsPrice: React.FC<{
 					</span>
 				</span>
 			)}
-			<div className='flex items-center gap-x-2'>
+			<div className='lg:flex hidden items-center gap-x-2'>
 				{LocationIcon ? <LocationIcon /> : null}
 			</div>
-		</>
+		</div>
 	);
 };
 

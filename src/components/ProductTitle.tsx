@@ -13,7 +13,7 @@ const ProductTitle: React.FC<{
 			<h3 className='font-medium line-clamp-1 max-w-6/7 text-sm text-black-800'>
 				{manufacturer?.man_name} {product.car_model}
 			</h3>
-			<span className='text-neutral text-srm font-medium whitespace-nowrap'>
+			<span className='text-neutral text-sm font-medium whitespace-nowrap'>
 				{product.prod_year} წ
 			</span>
 		</div>

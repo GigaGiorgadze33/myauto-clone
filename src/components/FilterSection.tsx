@@ -8,7 +8,9 @@ import Input from './Input';
 import { useApiData } from '@/state/ApiDataContext';
 import { generateModelsCacheKey } from '@/utils';
 
-const FilterSection = () => {
+const FilterSection: React.FC<{
+	afterSubmit?: () => void;
+}> = ({ afterSubmit }) => {
 	const { setValue, handleSubmit, getValues } = useFormContext<FilterForm>();
 	const {
 		manufacturersGroupedByVechile,
@@ -39,8 +41,9 @@ const FilterSection = () => {
 					'',
 					`${window.location.pathname}?${queryParams.toString()}`
 				);
+				afterSubmit?.();
 			})}
-			className='bg-white sticky top-28 left-0 w-full rounded-t-xl border shadow-filter border-divider'
+			className='bg-white lg:sticky top-28 left-0 w-full rounded-t-xl border shadow-filter border-divider'
 		>
 			<FilterButtons />
 			<div className='px-6 border-b border-divider-100 pb-6 gap-y-5 flex flex-col pt-5.5'>
