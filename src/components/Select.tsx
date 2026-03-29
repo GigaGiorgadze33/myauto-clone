@@ -4,27 +4,16 @@ import X from '@/icons/X';
 import type { SelectItem, SelectOption } from '@/types/filter';
 import classNames from 'classnames';
 import React, { useState, useRef, type ReactNode } from 'react';
-import { useWatch, type FieldPath } from 'react-hook-form';
+import { useWatch, type FieldPath, type FieldPathValue } from 'react-hook-form';
 
 type SelectValue<IsMulti extends boolean> = IsMulti extends true
 	? SelectOption[]
 	: string | number | null;
 
-type SelectProps<
-	Form extends Record<string, unknown>,
-	IsMulti extends boolean = true
-> = {
-	options?: SelectItem[];
-	name: FieldPath<Form>;
-	setValue: (value: SelectValue<IsMulti>) => void;
-	multiple: IsMulti;
-	label?: ReactNode;
-	placeholder?: ReactNode;
-};
-
 export default function Select<
 	Form extends Record<string, unknown>,
-	IsMulti extends boolean = true
+	IsMulti extends boolean = true,
+	Name extends FieldPath<Form> = FieldPath<Form>
 >({
 	options = [],
 	setValue,
@@ -32,7 +21,18 @@ export default function Select<
 	label,
 	placeholder,
 	name,
-}: SelectProps<Form, IsMulti>) {
+	disabled = false,
+	required,
+}: {
+	options?: SelectItem[] | readonly SelectItem[];
+	name: Name;
+	setValue: (value: FieldPathValue<Form, Name>) => void;
+	multiple: IsMulti;
+	disabled?: boolean;
+	label?: ReactNode;
+	required?: boolean;
+	placeholder?: ReactNode;
+}) {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const selected = useWatch({
@@ -58,19 +58,20 @@ export default function Select<
 			const newValue = isSelected(option)
 				? currentSelected.filter((item) => item.value !== option.value)
 				: [...currentSelected, option];
-			setValue(newValue as SelectValue<IsMulti>);
+			setValue(newValue as FieldPathValue<Form, Name>);
 		} else {
-			setValue(option.value as SelectValue<IsMulti>);
+			setValue(option.value as FieldPathValue<Form, Name>);
 			setIsOpen(false);
 		}
 	};
 
 	const handleClear = (e: React.MouseEvent) => {
+		if (required) return;
 		e.stopPropagation();
 		if (multiple) {
-			setValue([] as unknown as SelectValue<IsMulti>);
+			setValue([] as FieldPathValue<Form, Name>);
 		} else {
-			setValue(null as SelectValue<IsMulti>);
+			setValue(null as FieldPathValue<Form, Name>);
 		}
 		setIsOpen(false);
 	};
@@ -83,7 +84,7 @@ export default function Select<
 		<label
 			key={option.value}
 			className={`flex items-center font-helvetica text-sm py-2 px-4 cursor-pointer group ${
-				!multiple && isSelected(option)
+				isSelected(option)
 					? 'bg-gray-50 text-black-800 rounded-lg'
 					: 'text-secondary'
 			}`}
@@ -92,9 +93,7 @@ export default function Select<
 				handleSelect(option);
 			}}
 		>
-			<span
-				className={`${!multiple && isSelected(option) ? 'font-medium' : ''}`}
-			>
+			<span className={`${isSelected(option) ? 'font-medium' : ''}`}>
 				{option.label}
 			</span>
 		</label>
@@ -102,13 +101,24 @@ export default function Select<
 
 	return (
 		<div className='relative w-full' ref={dropdownRef}>
-			<label className='block text-black-800 text-xs font-medium mb-2'>
-				{label}
-			</label>
+			{label && (
+				<label className='block text-black-800 text-xs font-medium mb-2'>
+					{label}
+				</label>
+			)}
 
 			<div
-				className={`flex items-center h-10 justify-between border-secondary-100 pl-3 pr-2 bg-white border cursor-pointer rounded-xl transition-all`}
-				onClick={() => setIsOpen(!isOpen)}
+				className={classNames(
+					'flex items-center h-10 justify-between border-secondary-100 pl-3 pr-2 bg-white border  rounded-xl transition-all',
+					{
+						'bg-black-800/20! cursor-not-allowed': disabled,
+					}
+				)}
+				onClick={() => {
+					if (!disabled) {
+						setIsOpen((prev) => !prev);
+					}
+				}}
 			>
 				<div className='flex flex-col font-tbc justify-center  text-s overflow-hidden w-full'>
 					{!hasSelection ? (
@@ -129,7 +139,7 @@ export default function Select<
 				</div>
 
 				<div className='h-full flex items-center'>
-					{hasSelection ? (
+					{hasSelection && !required ? (
 						<button
 							onClick={handleClear}
 							className='text-black-800 p-1 hover:bg-divider rounded-full focus:outline-none'
@@ -155,11 +165,11 @@ export default function Select<
 						{options.map((item, index) => {
 							if ('groupLabel' in item) {
 								return (
-									<div key={`group-${index}`} className='mb-2'>
-										<div className='py-2 text-xs font-bold text-black-800 uppercase tracking-wider'>
+									<div key={`group-${index}`} className='mb-2 pl-4'>
+										<div className='py-2 text-xs font-bold text-black-800'>
 											{item.groupLabel}
 										</div>
-										<div className='ml-2'>
+										<div className=''>
 											{item.options.map((option) => renderOption(option))}
 										</div>
 									</div>

@@ -1,20 +1,46 @@
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import FilterButtons from './FilterButtons';
 import Select from './Select';
 import type { FilterForm } from '@/types/filter';
 import RadioToggle from './RadioToggle';
-import { CURRENCIES } from '@/config/constants';
+import { CURRENCIES, LISTING_TYPE } from '@/config/constants';
 import Input from './Input';
+import { useApiData } from '@/state/ApiDataContext';
+import { generateModelsCacheKey } from '@/utils';
 
 const FilterSection = () => {
-	const { setValue, handleSubmit } = useFormContext<FilterForm>();
+	const { setValue, handleSubmit, getValues } = useFormContext<FilterForm>();
+	const {
+		manufacturersGroupedByVechile,
+		categoriesGroupedByVehicleType,
+		modelsGroupedByManufacturerAndVechile,
+		fetchModels,
+		fetchProducts,
+	} = useApiData();
+	const vechile = useWatch({
+		name: 'vechile',
+	}) as FilterForm['vechile'];
 	return (
 		<form
 			role='search'
 			onSubmit={handleSubmit((data) => {
-				console.log(data);
+				fetchProducts(data);
+				const queryParams = new URLSearchParams(window.location.search);
+				for (const key in data) {
+					const value = data[key as keyof FilterForm];
+					if (Array.isArray(value)) {
+						queryParams.set(key, JSON.stringify(value));
+					} else if (value !== null) {
+						queryParams.set(key, String(value));
+					}
+				}
+				window.history.replaceState(
+					null,
+					'',
+					`${window.location.pathname}?${queryParams.toString()}`
+				);
 			})}
-			className='bg-white w-[24%] rounded-t-xl border drop-shadow-filter border-divider'
+			className='bg-white sticky top-28 left-0 w-full rounded-t-xl border shadow-filter border-divider'
 		>
 			<FilterButtons />
 			<div className='px-6 border-b border-divider-100 pb-6 gap-y-5 flex flex-col pt-5.5'>
@@ -24,67 +50,55 @@ const FilterSection = () => {
 					}
 					name={'for_rent'}
 					label='გარიგების ტიპი'
-					options={[
-						{
-							label: 'იყიდება',
-							value: '0',
-						},
-						{
-							label: 'ქირავდება',
-							value: '1',
-						},
-					]}
+					options={LISTING_TYPE}
 					placeholder={'გარიგების ტიპი'}
 					multiple={false}
 				/>
-				<Select<FilterForm>
-					setValue={(options) => setValue('manufactorers', options)}
+				<Select<FilterForm, true, 'manufactorers'>
+					setValue={(options) => {
+						const oldManufacturers = getValues('manufactorers') || [];
+						const newManufacturer = options.filter(
+							(option) =>
+								!oldManufacturers.some((old) => old.value === option.value)
+						)[0];
+						if (newManufacturer) {
+							fetchModels({
+								args: [Number(newManufacturer.value)],
+								customStoreKey: generateModelsCacheKey(options),
+							});
+						}
+						setValue('manufactorers', options);
+					}}
 					name={'manufactorers'}
 					label='მწარმოებლები'
-					options={[
-						{
-							label: 'Ford',
-							value: 'Ford',
-						},
-						{
-							label: 'Toyota',
-							value: 'toyota',
-						},
-					]}
+					options={
+						manufacturersGroupedByVechile?.[vechile]?.map((manufacturer) => ({
+							label: manufacturer.man_name,
+							value: manufacturer.man_id,
+						})) || []
+					}
 					multiple
 					placeholder={'ყველა მწარომებელი'}
 				/>
-				<Select<FilterForm>
+				<Select<FilterForm, true, 'models'>
 					setValue={(options) => setValue('models', options)}
 					name={'models'}
 					label='მოდელები'
-					options={[
-						{
-							label: 'მაზდა',
-							value: 'mazda',
-						},
-						{
-							label: 'ფიტი',
-							value: 'fit',
-						},
-					]}
+					disabled={!modelsGroupedByManufacturerAndVechile?.[vechile]?.length}
+					options={modelsGroupedByManufacturerAndVechile?.[vechile] ?? []}
 					multiple
 					placeholder={'ყველა მოდელი'}
 				/>
-				<Select<FilterForm>
+				<Select<FilterForm, true, 'categories'>
 					setValue={(options) => setValue('categories', options)}
 					name={'categories'}
 					label='კატეგორიები'
-					options={[
-						{
-							label: 'სედანი',
-							value: 'sedan',
-						},
-						{
-							label: 'ფიტი',
-							value: 'fit',
-						},
-					]}
+					options={
+						categoriesGroupedByVehicleType?.[vechile]?.map((category) => ({
+							label: category.title,
+							value: category.category_id,
+						})) || []
+					}
 					multiple
 					placeholder={'ყველა კატეგორია'}
 				/>
@@ -103,20 +117,20 @@ const FilterSection = () => {
 				<div className='mt-3 gap-x-1 flex items-center'>
 					<Input<FilterForm>
 						placeholder='დან'
-						name='price_range.0'
+						name='priceFrom'
 						type='number'
 						restrictNonNumbers
 					/>
 					<div className='w-1.5 shrink-0 h-0.5 bg-neutral block' />
 					<Input<FilterForm>
 						placeholder='მდე'
-						name='price_range.1'
+						name='priceTo'
 						type='number'
 						restrictNonNumbers
 					/>
 				</div>
 			</div>
-			<div className='drop-shadow-filter-search w-full bg-white pt-4 pb-5 px-6'>
+			<div className='shadow-filter-search w-full bg-white pt-4 pb-5 px-6'>
 				<button
 					className='text-white w-full font-bold font-tbc text-sm bg-primary h-8  rounded-md'
 					type='submit'

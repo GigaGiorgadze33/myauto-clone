@@ -101,19 +101,26 @@
 
 :root {
 	--color-secondary: #6f7383;
-	--color-seconday-100: #C2C9D8;
+	--color-seconday-100: #c2c9d8;
 	--color-primary: #fd4100;
 	--color-divider: #e2e5eb;
-	--color-divider-100: #E9E9F0;
-	--color-divider-2: #D8DBE2;
-	--color-black-800: #272A37;
-	--color-neutral: #8C929B;
-	--text-s: 13px;
-	--font-tbc: 'tbc', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-	--font-helvetica: 'helvetica', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-	--font-helvetica-geo: 'helvetica-neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--color-divider-100: #e9e9f0;
+	--color-divider-2: #d8dbe2;
+	--color-black-800: #272a37;
+	--color-black-400: #9ca1aa;
+	--color-success: #26B753;
+	--color-black-900: #1b1d25;
+	--color-primary-gray: #f2f3f6;
+	--color-neutral: #8c929b;
+	--color-error: #ff3b30;
+	--text-s: 0.8125rem;
+	--font-tbc: 'tbc', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		sans-serif;
+	--font-helvetica: 'helvetica', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+		Roboto, sans-serif;
+	--font-helvetica-geo: 'helvetica-neue', -apple-system, BlinkMacSystemFont,
+		'Segoe UI', Roboto, sans-serif;
 }
-
 
 @theme {
 	--color-secondary: var(--color-secondary);
@@ -124,10 +131,17 @@
 	--color-secondary-100: var(--color-seconday-100);
 	--color-black-800: var(--color-black-800);
 	--color-divider-2: var(--color-divider-2);
+	--color-error: var(--color-error);
+	--color-primary-gray: var(--color-primary-gray);
+	--color-black-400: var(--color-black-400);
+	--color-black-900: var(--color-black-900);
+	--color-success: var(--color-success);
 	--text-s: var(--text-s);
 
-	--drop-shadow-filter: box-shadow: 0px 4px 16px 0px #A4AEC11A;
-	--drop-shadow-filter-search: box-shadow: 0px 2px 16px 0px #272A3721;
+	--radius-1.5xl: 14px;
+
+	--shadow-filter: 0px 4px 16px 0px #a4aec11a;
+	--shadow-filter-search: 0px 2px 16px 0px #272a3721;
 
 	--font-tbc: var(--font-tbc);
 	--font-helvetica-geo: var(--font-helvetica-geo);
@@ -135,15 +149,15 @@
 }
 
 @layer base {
-    input[type='number']::-webkit-outer-spin-button,
-    input[type='number']::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+	input[type='number']::-webkit-outer-spin-button,
+	input[type='number']::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
 
-    input[type='number'] {
-        -moz-appearance: textfield;
-    }
+	input[type='number'] {
+		-moz-appearance: textfield;
+	}
 
 	.main-container {
 		max-width: 1050px;
@@ -151,7 +165,7 @@
 
 	body {
 		font-family: var(--font-helvetica-geo);
-		background-color: #f2f3f6;
+		background-color: var(--color-primary-gray);
 	}
 
 	button {

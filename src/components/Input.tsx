@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import type { ComponentProps } from 'react';
-import { useForm, type FieldPath } from 'react-hook-form';
+import { useFormContext, type FieldPath } from 'react-hook-form';
 
 function Input<Form extends Record<string, unknown>>({
 	placeholder,
@@ -14,7 +14,8 @@ function Input<Form extends Record<string, unknown>>({
 	name: FieldPath<Form>;
 	restrictNonNumbers?: boolean;
 } & ComponentProps<'input'>) {
-	const { register } = useForm<Form>();
+	const { register, setValue } = useFormContext<Form>();
+	// TODO: consider converting to usd
 	return (
 		<input
 			placeholder={placeholder}
@@ -28,6 +29,7 @@ function Input<Form extends Record<string, unknown>>({
 							return;
 						}
 					}
+					setValue(name, e.target.value);
 					onChange?.(e);
 				},
 			})}

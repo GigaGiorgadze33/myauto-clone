@@ -25,7 +25,7 @@ const Breadcrumb: React.FC<
 
 const Breadcrumbs = () => {
 	return (
-		<nav>
+		<nav className='max-lg:hidden'>
 			<ul className='flex text-secondary items-center gap-x-1'>
 				<Breadcrumb>მთავარი</Breadcrumb>
 				<ArrowLeft className='w-2.5' />

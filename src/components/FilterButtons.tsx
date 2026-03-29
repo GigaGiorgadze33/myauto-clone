@@ -36,6 +36,11 @@ const FilterButtons = () => {
 	const vehicle = useWatch({
 		name: 'vechile',
 	}) satisfies Vechile;
+	const restartVechileBasedFilters = () => {
+		setValue('categories', []);
+		setValue('manufactorers', []);
+		setValue('models', []);
+	};
 	return (
 		<div className='relative flex'>
 			<div
@@ -51,21 +56,30 @@ const FilterButtons = () => {
 			<FilterButton
 				className='border-b'
 				active={vehicle === 'car'}
-				onClick={() => setValue('vechile', 'car')}
+				onClick={() => {
+					setValue('vechile', 'car');
+					restartVechileBasedFilters();
+				}}
 			>
 				<Car />
 			</FilterButton>
 			<FilterButton
 				active={vehicle === 'spec'}
 				className='border-x border-b'
-				onClick={() => setValue('vechile', 'spec')}
+				onClick={() => {
+					setValue('vechile', 'spec');
+					restartVechileBasedFilters();
+				}}
 			>
 				<Spec />
 			</FilterButton>
 			<FilterButton
 				className='border-b'
 				active={vehicle === 'moto'}
-				onClick={() => setValue('vechile', 'moto')}
+				onClick={() => {
+					setValue('vechile', 'moto');
+					restartVechileBasedFilters();
+				}}
 			>
 				<Moto />
 			</FilterButton>

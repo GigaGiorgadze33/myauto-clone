@@ -3,28 +3,44 @@ import Breadcrumbs from './components/Breadcrumbs';
 import { FormProvider, useForm } from 'react-hook-form';
 import type { FilterForm } from './types/filter';
 import FilterSection from './components/FilterSection';
+import ProductsSection from './components/ProductsSection';
+import ApiDataContextProvider from './state/ApiDataContextProvider';
 
 const App = () => {
+	const searchParams = new URLSearchParams(window.location.search);
 	const form = useForm<FilterForm>({
 		defaultValues: {
-			currencyId: '1',
-			for_rent: null,
-			categories: [],
-			manufactorers: [],
-			models: [],
-			price_range: [0, 100000],
-			vechile: 'car',
+			currencyId: (searchParams.get('currencyId')?.toString() ||
+				'1') as FilterForm['currencyId'],
+			for_rent: (searchParams.get('for_rent')?.toString() ||
+				'0') as FilterForm['for_rent'],
+			categories: JSON.parse(searchParams.get('categories') || '[]'),
+			manufactorers: JSON.parse(searchParams.get('manufactorers') || '[]'),
+			models: JSON.parse(searchParams.get('models') || '[]'),
+			priceFrom: Number(searchParams.get('priceFrom')) || null,
+			priceTo: Number(searchParams.get('priceTo')) || null,
+			vechile: (searchParams.get('vechile')?.toString() ||
+				'car') as FilterForm['vechile'],
+			period: (searchParams.get('period')?.toString() ||
+				'3h') as FilterForm['period'],
+			sorting: (searchParams.get('sorting')?.toString() ||
+				'1') as FilterForm['sorting'],
 		},
 	});
 	return (
 		<FormProvider {...form}>
-			<Navbar />
-			<main className='main-container mx-auto mt-8'>
-				<Breadcrumbs />
-				<div className='flex items-center mt-5 gap-x-5'>
-					<FilterSection />
-				</div>
-			</main>
+			<ApiDataContextProvider>
+				<Navbar />
+				<main className='main-container px-6 pb-8 mx-auto mt-8'>
+					<Breadcrumbs />
+					<div className='flex items-start mt-5 gap-x-5'>
+						<div className='max-lg:hidden w-[24%]'>
+							<FilterSection />
+						</div>
+						<ProductsSection />
+					</div>
+				</main>
+			</ApiDataContextProvider>
 		</FormProvider>
 	);
 };

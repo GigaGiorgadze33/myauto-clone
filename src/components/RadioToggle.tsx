@@ -34,12 +34,13 @@ function RadioToggle<Form extends Record<string, unknown>>({
 								onChange(otherOption.value);
 							}
 						}}
-						className={`flex items-center transition-all justify-center size-6 rounded-full font-bold transition-all focus:outline-none ${
+						className={`flex items-center justify-center size-6 rounded-full font-medium transition-all focus:outline-none ${
 							isActive
 								? 'bg-black-800 text-white shadow-sm'
 								: 'text-neutral bg-transparent'
 						}`}
 					>
+						{/* TODO: maybe replace with icons */}
 						{option.label}
 					</button>
 				);
