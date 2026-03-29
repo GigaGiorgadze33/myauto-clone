@@ -187,6 +187,12 @@ const ApiDataContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 		{} as ModelsGroupedByManufacturerAndVechile
 	);
 
+	const anyDataInitialLoading =
+		(manufacturers.status === 'loading' && !manufacturers.data?.length) ||
+		(categories.status === 'loading' && !categories.data?.data?.length) ||
+		(models.status === 'loading' && !models.data?.data?.length) ||
+		(products.status === 'loading' && !products.data);
+
 	return (
 		<ApiDataContext.Provider
 			value={{
@@ -201,6 +207,7 @@ const ApiDataContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 				modelsStatus: models.status,
 				products: products.data ?? null,
 				fetchProducts: refetchProducts,
+				anyDataInitialLoading,
 			}}
 		>
 			{children}

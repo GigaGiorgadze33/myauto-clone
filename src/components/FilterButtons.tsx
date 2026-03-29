@@ -15,7 +15,7 @@ const FilterButton: React.FC<
 		<button
 			type='button'
 			className={classNames(
-				'py-2 w-1/3 px-2.5 transition-all delay-150 border-divider-100',
+				'py-2 w-1/3 px-2.5 flex items-center justify-center transition-all delay-150 border-divider-100',
 				{
 					'text-neutral': !active,
 					'text-primary': active,

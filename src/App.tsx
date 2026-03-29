@@ -6,6 +6,7 @@ import FilterSection from './components/FilterSection';
 import ProductsSection from './components/ProductsSection';
 import ApiDataContextProvider from './state/ApiDataContextProvider';
 import MobileFiltersSection from './components/MobileFiltersSection';
+import Loading from './components/Loading';
 
 const App = () => {
 	const searchParams = new URLSearchParams(window.location.search);
@@ -33,6 +34,7 @@ const App = () => {
 		<FormProvider {...form}>
 			<ApiDataContextProvider>
 				<Navbar />
+				<Loading />
 				<main className='main-container lg:px-6 pb-8 mx-auto lg:mt-8'>
 					<Breadcrumbs />
 					<MobileFiltersSection />

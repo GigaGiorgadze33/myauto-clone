@@ -19,6 +19,7 @@ export type ApiDataContextValue = {
 	fetchModels: UseFetchReturn<ModelItem[], [number]>['execute'];
 	modelsGroupedByManufacturerAndVechile: ModelsGroupedByManufacturerAndVechile | null;
 	modelsStatus: FetchStatus;
+	anyDataInitialLoading: boolean;
 	products: ProductsResponse | null;
 	fetchProducts: (data?: Partial<FilterForm>) => Promise<void>;
 };
