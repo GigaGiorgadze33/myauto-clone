@@ -70,6 +70,14 @@ const FilterSection: React.FC<{
 								customStoreKey: generateModelsCacheKey(options),
 							});
 						}
+						setValue(
+							'models',
+							getValues('models')?.filter((model) => {
+								return options.some(
+									(manufacturer) => manufacturer.value === model.groupValue
+								);
+							})
+						);
 						setValue('manufactorers', options);
 					}}
 					name={'manufactorers'}
