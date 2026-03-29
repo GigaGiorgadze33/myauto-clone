@@ -1,8 +1,4 @@
-import {
-	CURRENCIES,
-	GEL_TO_USD_RATE,
-	LOCATIONS,
-} from '@/config/constants';
+import { CURRENCIES, GEL_TO_USD_RATE, LOCATIONS } from '@/config/constants';
 import Checkmark from '@/icons/Checkmark';
 import type { ProductItem } from '@/types/data';
 import type { FilterForm } from '@/types/filter';
@@ -12,6 +8,7 @@ import { useWatch } from 'react-hook-form';
 
 const ProductCustomsPrice: React.FC<{
 	product: ProductItem;
+	mobile?: boolean;
 }> = ({ product }) => {
 	const currencyId = useWatch<FilterForm>({
 		name: 'currencyId',

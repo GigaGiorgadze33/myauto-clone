@@ -9,31 +9,20 @@ import Edit from '@/icons/Edit';
 import Compare from '@/icons/Compare';
 import Heart from '@/icons/Heart';
 import ProductImages from './ProductImages';
-import { useApiData } from '@/state/ApiDataContext';
 import { TRANSMISSIONS } from '@/config/constants';
 import ProductCustomsPrice from './ProductCustomsPrice';
+import ProductTitle from './ProductTitle';
 
 const Product: React.FC<{
 	product: ProductItem;
 }> = ({ product }) => {
-	const { manufacturers } = useApiData();
-	const manufacturer = manufacturers?.find(
-		(m) => Number(m.man_id) === Number(product.man_id)
-	);
 	return (
 		<div className='bg-white rounded-1.5xl'>
-			<div className='flex gap-x-4 p-4'>
+			<div className='flex lg:flex-row flex-col gap-x-4 p-4'>
 				<ProductImages product={product} />
 				<div className='grow'>
 					<div className='flex max-lg:flex-col items-center w-full justify-between gap-x-2'>
-						<div className='flex items-center gap-x-2'>
-							<h3 className='font-medium line-clamp-1 max-w-6/7 text-sm text-black-800'>
-								{manufacturer?.man_name} {product.car_model}
-							</h3>
-							<span className='text-neutral text-srm font-medium whitespace-nowrap'>
-								{product.prod_year} წ
-							</span>
-						</div>
+						<ProductTitle product={product} />
 						<div className='flex gap-x-4 items-center'>
 							<ProductCustomsPrice product={product} />
 						</div>

@@ -14,7 +14,7 @@ const ProductImages: React.FC<{
 	return (
 		<div
 			onMouseLeave={() => setPictureIndex(0)}
-			className='w-46 group aspect-video relative rounded-[10px] overflow-hidden'
+			className='lg:w-46 w-full group aspect-video relative rounded-[10px] overflow-hidden'
 		>
 			{carPhotos.length > 4 && pictureIndex === 3 && (
 				<MoreImagesOverlay imageCount={carPhotos.length - 4} />
