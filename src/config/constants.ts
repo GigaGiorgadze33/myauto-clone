@@ -7,8 +7,8 @@ export const CURRENCIES = [
 	 * values are from myauto.ge live site, they are used to fetch data from api
 	 * as they were not provided in the docs, i had to get them from the live site
 	 */
-	{ value: '1', label: '₾' },
-	{ value: '3', label: '$' },
+	{ value: '3', label: '₾' },
+	{ value: '1', label: '$' },
 ] satisfies [SelectOption, SelectOption];
 
 export const PERIOD_FILTERS = [
@@ -76,10 +76,14 @@ export const LOCATIONS = {
 	},
 } as const;
 
+export const VEHICLE_MAPPING = {
+	car: 0,
+	spec: 1,
+	moto: 2,
+};
+
 /**
  * this exchange rate is from national bank as of 29th of march 2026
  * integrating national bank api for exchange rates seems out of scope for this assignment.
  */
-export const USD_TO_GEL_RATE = 0.0041;
-
 export const GEL_TO_USD_RATE = 2.7025;

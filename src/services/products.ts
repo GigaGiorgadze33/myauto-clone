@@ -1,3 +1,4 @@
+import type { VEHICLE_MAPPING } from '@/config/constants';
 import type { ProductsResponse } from '@/types/data';
 import type { FilterForm } from '@/types/filter';
 
@@ -9,6 +10,8 @@ export const getProducts = async (params?: {
 	PriceTo: number | null;
 	Period: FilterForm['period'] | null;
 	SortOrder: FilterForm['sorting'] | null;
+	TypeID: typeof VEHICLE_MAPPING[keyof typeof VEHICLE_MAPPING];
+	CurrencyID: FilterForm['currencyId'] | null;
 	page?: number | null;
 }) => {
 	const queryParams = new URLSearchParams();

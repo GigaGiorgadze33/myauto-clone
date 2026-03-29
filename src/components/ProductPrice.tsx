@@ -1,4 +1,4 @@
-import { CURRENCIES, GEL_TO_USD_RATE } from '@/config/constants';
+import { CURRENCIES } from '@/config/constants';
 import type { ProductItem } from '@/types/data';
 import type { FilterForm } from '@/types/filter';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -17,7 +17,7 @@ const ProductPrice = ({ product }: { product: ProductItem }) => {
 	const formattedPrice = numberFormatter.format(
 		Number(
 			currencyDetails?.value === CURRENCIES[0].value
-				? Math.round(product.price * GEL_TO_USD_RATE)
+				? product.price_value
 				: product.price
 		)
 	);

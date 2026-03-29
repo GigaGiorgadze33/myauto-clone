@@ -19,6 +19,7 @@ import {
 	formatSearchForModels,
 	generateModelsCacheKey,
 } from '@/utils';
+import { VEHICLE_MAPPING } from '@/config/constants';
 
 const ApiDataContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	const { getValues } = useFormContext<FilterForm>();
@@ -71,9 +72,11 @@ const ApiDataContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 					Period: formData.period,
 					PriceFrom: formData.priceFrom,
 					PriceTo: formData.priceTo,
+					CurrencyID: formData.currencyId,
 					Mans: formatSearchForModels(
 						formatModelsOrManufacturers(formData.models, formData.manufactorers)
 					),
+					TypeID: VEHICLE_MAPPING[formData.vechile],
 					SortOrder: formData.sorting,
 					page: 1,
 				},
