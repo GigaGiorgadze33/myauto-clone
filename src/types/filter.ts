@@ -26,4 +26,5 @@ export type FilterForm = {
 	categories: SelectOption[];
 	priceFrom: number | null;
 	priceTo: number | null;
+	page: number;
 };

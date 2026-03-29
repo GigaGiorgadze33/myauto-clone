@@ -78,7 +78,7 @@ const ApiDataContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 					),
 					TypeID: VEHICLE_MAPPING[formData.vechile],
 					SortOrder: formData.sorting,
-					page: 1,
+					Page: formData.page,
 				},
 			],
 		});

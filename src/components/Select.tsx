@@ -112,6 +112,7 @@ export default function Select<
 					'flex items-center h-10 justify-between border-secondary-100 pl-3 pr-2 bg-white border  rounded-xl transition-all',
 					{
 						'bg-black-800/20! cursor-not-allowed': disabled,
+						'cursor-pointer': !disabled,
 					}
 				)}
 				onClick={() => {

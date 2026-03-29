@@ -1,13 +1,15 @@
 import type { FilterForm } from '@/types/filter';
 import Select from './Select';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { PERIOD_FILTERS, SORTING_OPTIONS } from '@/config/constants';
 import Product from './Product';
 import { useApiData } from '@/state/ApiDataContext';
+import { Pagination } from './Pagination';
 
 const ProductsSection = () => {
 	const { setValue } = useFormContext<FilterForm>();
 	const { products, fetchProducts } = useApiData();
+	const page = useWatch({ name: 'page' });
 	return (
 		<section className='flex w-full flex-col max-lg:bg-white gap-y-2 lg:gap-y-4'>
 			<div className='lg:flex hidden w-full items-center justify-between'>
@@ -67,6 +69,21 @@ const ProductsSection = () => {
 					/>
 				))}
 			</ul>
+			<Pagination
+				currentPage={page}
+				onPageChange={(newPage) => {
+					setValue('page', newPage);
+					const queryParams = new URLSearchParams(window.location.search);
+					queryParams.set('page', String(newPage));
+					window.history.replaceState(
+						null,
+						'',
+						`${window.location.pathname}?${queryParams.toString()}`
+					);
+					fetchProducts({ page: newPage });
+				}}
+				totalPages={products?.data.meta.last_page ?? 0}
+			/>
 		</section>
 	);
 };

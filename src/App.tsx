@@ -26,6 +26,7 @@ const App = () => {
 				'3h') as FilterForm['period'],
 			sorting: (searchParams.get('sorting')?.toString() ||
 				'1') as FilterForm['sorting'],
+			page: Number(searchParams.get('page')?.toString()) || 1,
 		},
 	});
 	return (

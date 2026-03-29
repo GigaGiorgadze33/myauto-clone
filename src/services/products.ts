@@ -12,7 +12,7 @@ export const getProducts = async (params?: {
 	SortOrder: FilterForm['sorting'] | null;
 	TypeID: typeof VEHICLE_MAPPING[keyof typeof VEHICLE_MAPPING];
 	CurrencyID: FilterForm['currencyId'] | null;
-	page?: number | null;
+	Page?: number | null;
 }) => {
 	const queryParams = new URLSearchParams();
 
