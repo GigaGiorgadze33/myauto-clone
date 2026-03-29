@@ -33,7 +33,7 @@ const ProductImages: React.FC<{
 			<div
 				className={classNames(
 					'absolute group-hover:opacity-100 opacity-0 h-full w-full z-20 inset-0 flex items-end pb-4 px-2 gap-x-1',
-					isMobile && pictureIndex !== 0 ? 'opacity-100!' : 'opacity-0!'
+					!isMobile ? '' : pictureIndex !== 0 ? 'opacity-100!' : 'opacity-0!'
 				)}
 			>
 				{Array.from({ length: chipCount + 1 }).map((_, index) => (

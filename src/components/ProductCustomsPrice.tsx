@@ -22,7 +22,7 @@ const ProductCustomsPrice: React.FC<{
 	return (
 		<div
 			className={classNames(
-				'lg:font-tbc max-lg:rounded-md max-lg:py-1 max-lg:pl-1 max-lg:pr-2 text-[10px] lg:text-[11px]',
+				'lg:font-tbc max-lg:rounded-md lg:flex gap-x-4 items-center max-lg:py-1 max-lg:pl-1 max-lg:pr-2 text-[10px] lg:text-[11px]',
 				{
 					'max-lg:bg-success-50': product.customs_passed,
 					'max-lg:bg-error-100': !product.customs_passed,
